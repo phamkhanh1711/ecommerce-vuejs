@@ -1,0 +1,6 @@
+.nav-bar {
+  @apply gap-10 hidden lg:flex;
+  a {
+    @apply py-[30px] w-full h-full block text-gray-600 font-semibold text-xl border-b-2 border-transparent hover:border-b-black hover:text-black transition
+  }
+}
