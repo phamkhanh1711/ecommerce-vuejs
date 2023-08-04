@@ -4,9 +4,9 @@ import UserIcon from "@/components/icons/UserIcon.vue";
 import LocationIcon from "@/components/icons/LocationIcon.vue";
 import SearchIcon from "@/components/icons/SearchIcon.vue";
 import BarIcon from "@/components/icons/BarIcon.vue";
+import store from "@/store/store";
 
 const Navbar = NavbarData;
-
 </script>
 
 <template>
@@ -25,28 +25,71 @@ const Navbar = NavbarData;
           <router-link :to="item.url">{{ item.title }}</router-link>
         </div>
       </div>
-      <div class="flex gap-6">
-        <router-link to="/login">
-          <UserIcon/>
-        </router-link>
-        <a href="#" class="hidden md:block">
+      <div class="flex">
+        <v-menu open-on-hove>
+          <template v-slot:activator="{ props }">
+            <button
+                v-bind="props"
+                class="rounded-full p-2 mx-2"
+            >
+              <UserIcon/>
+            </button>
+          </template>
+          <v-list v-if="JSON.stringify(store.state.auth.user) !== '{}'">
+            <v-list-item>
+              <v-list-item-title>
+                <router-link to="/profile">{{ store.state.auth.user.email }}</router-link>
+              </v-list-item-title>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-title>
+                <button @click="logout">Logout</button>
+              </v-list-item-title>
+            </v-list-item>
+          </v-list>
+          <v-list v-else>
+            <v-list-item>
+              <v-list-item-title>
+                <router-link to="/login">Login</router-link>
+              </v-list-item-title>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-title>
+                <router-link to="/register">Register</router-link>
+              </v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+        <button class="rounded-full p-2 mx-2 hidden md:block">
           <LocationIcon/>
-        </a>
-        <a href="#">
+        </button>
+        <button class="rounded-full p-2 mx-2"
+        >
           <SearchIcon/>
-        </a>
+        </button>
       </div>
     </div>
   </header>
 </template>
 <script>
+import {useToast} from "vue-toastification";
+
+const toast = useToast();
 export default {
   name: "MainHeader",
   methods: {
     drawerClick() {
       this.$emit("drawerClick", true);
     },
+    logout() {
+      this.$store.dispatch("auth/logout").then(() => {
+        toast.success("Logout successfully")
+      });
+    },
   },
+  beforeCreate() {
+    this.$store.dispatch("auth/checkAuth");
+  }
 };
 </script>
 

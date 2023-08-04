@@ -5,7 +5,7 @@ import ArrowLeftIcon from "@/components/icons/ArrowLeftIcon.vue";
 
 </script>
 <template>
-  <v-carousel hide-delimiters min-height="300px" continuous="false" cycle="true" interval="3500" >
+  <v-carousel hide-delimiters interval="3500" >
     <template v-slot:prev="{ props }">
       <v-btn
           variant="elevated"

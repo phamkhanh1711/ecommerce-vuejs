@@ -1,6 +1,4 @@
 <script setup>
-import {ref} from "vue";
-
 const navItems = [
   {
     title: 'Store',
@@ -31,18 +29,16 @@ const navItems = [
     value: 'service',
   }
 ]
-
-
 </script>
 
 <template>
   <v-layout>
     <div class="LayoutDefault w-screen">
-      <MainHeader @drawerClick="drawerClickSet"/>
+      <main-header @drawerClick="drawerClickSet"/>
       <main>
         <slot/>
       </main>
-      <MainFooter/>
+      <main-footer/>
     </div>
     <div class="block lg:hidden">
       <v-navigation-drawer
@@ -68,12 +64,11 @@ import MainFooter from "@/components/Footer/MainFooter.vue";
 import {ref} from "vue";
 
 const drawer = ref(false)
-
 export default {
   name: "LayoutDefault",
   components: {
-    MainHeader,
-    MainFooter,
+    "main-header": MainHeader,
+    "main-footer": MainFooter,
   },
   methods: {
     drawerClickSet() {

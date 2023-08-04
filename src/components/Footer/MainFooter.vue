@@ -206,3 +206,9 @@ const footerLink = [
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  name: 'MainFooter',
+}
+</script>

@@ -1,7 +1,32 @@
 <script setup>
-import {ref} from "vue";
+import {reactive, ref} from "vue";
+import {useRouter} from "vue-router";
+import store from "@/store/store";
+import {useToast} from "vue-toastification";
 
 const remember = ref(false);
+
+const data = reactive({
+  email: '',
+  password: '',
+})
+
+const router = useRouter()
+const toast = useToast()
+const handleLogin = () => {
+  store.dispatch('auth/login', data)
+      .then(() => {
+        if (remember.value) {
+          localStorage.setItem('remember', true)
+        }
+        toast.success('Login successful')
+        router.push('/')
+      })
+      .catch((err) => {
+        toast.error(typeof err.response.data.data !== "object" ? err.response.data.data : err.response.data.data[0]['msg'])
+      })
+}
+
 </script>
 
 <template>
@@ -11,20 +36,20 @@ const remember = ref(false);
       <p class="mb-4">Login to your account</p>
       <form class="flex flex-col gap-4">
         <label class="flex flex-col gap-1">
-          <v-text-field
-              label="Email" type="email" variant="outlined">
+          <v-text-field v-model="data.email"
+                        label="Email" type="email" variant="outlined">
           </v-text-field>
         </label>
         <label class="flex flex-col gap-1">
-          <v-text-field
-              label="Password" type="password" variant="outlined">
+          <v-text-field v-model="data.password"
+                        label="Password" type="password" variant="outlined">
           </v-text-field>
         </label>
         <label class="flex items-center gap-2">
           <input type="checkbox" class="border rounded accent-black" v-model="remember">
           <span>Remember me</span>
         </label>
-        <v-btn class="bg-black">Login</v-btn>
+        <v-btn class="bg-black" @click="handleLogin">Login</v-btn>
       </form>
       <div class="mt-10">
         <p class="text-center">Don't have an account?
@@ -41,5 +66,5 @@ export default {
   data: () => ({
     remember: false,
   }),
-};
+}
 </script>

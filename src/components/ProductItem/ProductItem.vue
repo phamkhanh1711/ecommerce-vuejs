@@ -1,5 +1,15 @@
+<script setup>
+import {useToast} from "vue-toastification";
+
+const toast = useToast()
+
+const addToCart = () => {
+  toast.success('Add to cart success')
+}
+</script>
+
 <template>
-  <div>
+  <router-link v-bind:to="'/product/'+id">
     <div class="w-full">
       <v-img
           src="https://asset-us-store.msi.com/image/cache/catalog/Pd_page/Laptops/2022/PRESTIGE14EVO/CARBONGRAY/PRESTIGE14EVOGREY-1-160x160.png"
@@ -7,7 +17,7 @@
     </div>
     <v-divider class="border-opacity-100"/>
     <p class="p-2 font-bold">
-      <router-link to="/">Prestige 14Evo A12M-081 14" FHD Ultra Thin</router-link>
+      <router-link v-bind:to="'/product/'+id">Prestige 14Evo A12M-081 14" FHD Ultra Thin</router-link>
     </p>
     <v-divider class="border-opacity-100"/>
     <ul class="list-disc pl-6 text-sm">
@@ -32,11 +42,22 @@
     <v-divider class="border-opacity-100"/>
     <div class="py-4 w-full flex items-center gap-2 justify-end">
       <button class="w-fit bg-white border rounded-xl px-4 hover:opacity-80 transition">Compare</button>
-      <button class="w-fit bg-red-500 border border-red-500 rounded-xl text-white px-4 hover:opacity-80 transition">Add
+      <button class="w-fit bg-red-500 border border-red-500 rounded-xl text-white px-4 hover:opacity-80 transition"
+              @click="addToCart">Add
         to cart
       </button>
     </div>
-  </div>
+  </router-link>
 </template>
-<script setup>
+
+<script>
+export default {
+  name: "ProductItem",
+  props: {
+    id: {
+      type: String,
+      required: true
+    }
+  },
+};
 </script>

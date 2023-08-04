@@ -1,23 +1,24 @@
 <template>
-  <component :is="layout">
-    <router-view/>
-  </component>
+  <div>
+    <component :is="layout">
+      <router-view></router-view>
+    </component>
+  </div>
 </template>
 <script>
 
 import MainHeader from "@/components/Header/MainHeader.vue";
+import MainFooter from "@/components/Footer/MainFooter.vue";
 
 const defaultLayout = {
   name: 'DefaultLayout',
   components: {
-    MainHeader
+    "main-header": MainHeader,
+    "main-footer": MainFooter
   }
 }
 export default {
   name: 'App',
-  components: {
-    MainHeader
-  },
   computed: {
     layout() {
       return this.$router.currentRoute.value.meta.layout || defaultLayout
