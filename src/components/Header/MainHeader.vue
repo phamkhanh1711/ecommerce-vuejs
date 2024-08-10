@@ -14,7 +14,7 @@ const Navbar = NavbarData;
     <div class="container mx-auto flex items-center justify-space-between gap-10">
       <div class="block lg:hidden">
         <v-btn variant="text" @click="drawerClick">
-          <BarIcon/>
+                  <BarIcon/>
         </v-btn>
       </div>
       <router-link to="/" class="logo">
@@ -43,7 +43,7 @@ const Navbar = NavbarData;
             </v-list-item>
             <v-list-item>
               <v-list-item-title>
-                <button @click="logout">Logout</button>
+                <button @click="logout">đăng xuất</button>
               </v-list-item-title>
             </v-list-item>
           </v-list>
